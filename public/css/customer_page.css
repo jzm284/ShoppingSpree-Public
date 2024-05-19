@@ -1,0 +1,94 @@
+body {
+    background-color: #9fa0cc;
+    margin: 0;
+    max-width: 100%;
+    max-height: 100%;
+    background-image: url("../grocery.jpg");
+    font-family: 'Abel', sans-serif;
+    color: white;
+    overflow-y: hidden;
+    background-repeat:no-repeat;
+    background-size:100% 100vh;
+}
+
+#customer_list_container{
+    height: 750px; 
+    background: white;
+    margin-left: 20%; 
+    margin-right: 20%;
+    margin-top:5%; 
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    overflow-y: auto;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+#customer_list_input{
+    border-color: #090018;
+    position: relative;
+    width: 90%;
+    height: 50px;
+    margin: 5%;
+    font-size: 30px;
+    font-family: 'Abel', sans-serif;
+    border-radius: 6px;
+    outline: 3px solid #090018;
+}
+
+.listItemContainer{
+    position : relative;
+    border-style : solid;
+    border-width : 1px;
+    width : 90%;
+    height : 50px;
+    background-color : transparent;
+    border-color : #090018;
+    margin-left : 5%;
+    margin-top : 2%;
+    font-size : 30px;
+    font-family : 'Abel', sans-serif;
+    border-radius : 6px;
+}
+
+#continue {
+    Position: relative;
+    bottom: 3vh;
+    background-color: white; /* Green */
+    border: 1px solid, #090018;
+    color: #090018;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    margin-right: 45%;
+    margin-left: 45%;
+    font-family : 'Abel', sans-serif;
+  }
+  
+#listItem{
+    font-size : 30px;
+    width : 98.2%;
+    height : 90%;
+    background-color : transparent;
+    border-color : transparent;
+    padding-left : 10px;
+    border-radius : 6px;
+    font-family : 'Abel', sans-serif;
+}
+
+.removeListItem{
+    margin-right : .5%;
+    position : absolute;
+    right : 0;
+    border-color : transparent;
+    top : 50px;
+    height:80%;
+    width:10%;
+    border-radius : 6px;
+    transform : translateY(-110%);
+}
+
+.removeListItem:hover{
+    background-color: darkgrey;
+}

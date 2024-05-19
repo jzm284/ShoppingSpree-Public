@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoppingSpree</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="scripts/script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+    </header>
+
+    <main>
+        <div class="register-login">
+            <img src="./images/logo.png" style="width: 100%; height: 40%" id="logo">
+            <section>
+                <h2 style="text-align:left; margin-top:-5%; margin-bottom: 27px; font-size: 24px;">Login</h2>
+                <label id="register-email-header" type="text">Email</label>
+                <input type="text" name="registeremail" id="register-email" placeholder="someone@example.com">
+                <br>
+                <label id="register-password-header" type="text">Password</label>
+                <input type="password" name="registerpassword" id="register-password" placeholder="eggrollplant123?">
+            </section>
+            <section>
+                <input id="remember-me-box" style="width: 20px" type="checkbox">
+                <label id="remember-me-text">Remember Me</label>
+            </section>
+            <br>
+            <button id="login-button" onclick="">Login</button>
+            <form action="/auth/register" method="get">Don't have an account?<button id="register-page-button"><u>Sign Up</u></button>
+            </form>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+body{
+    background-color: #9fa0cc;
+    margin: 0;
+    max-width: 100%;
+    max-height: 100%;
+    background-image: url("../images/background.jpg");
+    font-family: 'Abel', sans-serif;
+    color: white;
+    overflow-y: hidden;
+    background-repeat:no-repeat;
+    background-size:100% 100vh;
+}
+
+input{
+    width: 98%;
+    font-family: 'Abel', sans-serif;
+}
+button {
+    background-color: #f0f0f6;
+    border: none;
+    color: #090018;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    outline: 1px solid #090018;
+    font-family: 'Abel', sans-serif;
+    width:49.4%;
+}
+#login-button {
+    font-size: 16px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+#main-logo {
+    width: 75px;
+    height: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.register-login {
+    position: relative;
+    visibility: visible;
+    width: 22%;
+    height: 96.5vh;
+    padding: 1%;
+    background-color: #090018;
+}
+
+#register-page-button:hover{
+    cursor:grab;
+}
+
+#remember-me-box{
+    position: relative;
+    margin-top: 17px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    right: 5px;
+}
+
+#remember-me-text{
+    position: relative;
+    margin-top: 17px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    right: 11px;
+    bottom: 1.5px;
+}
+
+#register-title{
+    font-size: 50px;
+    letter-spacing: 10px;
+}
+
+#register-email{
+    margin-bottom: 20px;
+}
+
+#register-button{
+    margin-bottom: 5px;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 13px;
+}
+
+#register-button:hover{
+    cursor: grab;
+    background-color: lightgrey;
+}
+
+#register-password-header{
+    margin-top: 100px;
+}
+
+#login-password{
+    margin-bottom: 10px;
+}
+#owner{
+    background-color: white;
+    color: #090018;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#customer{
+    color: #090018;
+    background-color:white;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.inactive{
+    background-color: #222222!important;
+}
+
+.active{
+    color: #090018!important;
+    background-color: white;
+}
+
+#owner:hover{
+    background-color: lightgrey;
+}
+
+#customer:hover{
+    background-color: lightgrey;
+}
+
+#customer:hover{
+    background-color: lightgrey;
+}
+
