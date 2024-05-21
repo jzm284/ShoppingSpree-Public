@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShoppingSpree</title>
@@ -9,39 +10,54 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
-    </head>
+</head>
+
 <body>
 
-<header>
-    <div id="register-header">
-    </div> 
-</header>
+    <header>
+        <div id="register-header">
+        </div>
+    </header>
 
-<main>
-    <div class="register-login">
-        <img src="/images/logo.png" style="width: 100%; height: 40%" id="logo">
-        <section>
-            <h2 style="text-align:left; margin-top:-5%">Create Account</h2>
-            <section class="register-box" style="text-align:center">
-                <div id = "iam-buttons">
-                <button name="type" id="customer" onclick=toggleCustomer()>Customer</button>
-                <button name="type" id="owner" onclick=toggleOwner()>Store Owner</button>
-                </div>
-                <br>
-            </section>
-            <label id="register-email-header" type="text">Email</label>
-            <input type="text" name="registerEmail" id="register-email" placeholder="someone@example.com">
-            <br>
-
-            <label id="register-password-header" type="text">Password</label>
-            <input type="password" name="registerPass" id="register-password" placeholder="eggrollplant123?">
+    <main>
+        <div class="register-login">
+            <img src="/images/logo.png" style="width: 100%; height: 40%" id="logo">
             <section>
-                <input id="remember-me" style="width: 10px"type="checkbox">Remember Me>
+                <h2 style="text-align:left; margin-top:-5%">Create Account</h2>
+                <section class="register-box" style="text-align:center">
+                    <div id="iam-buttons">
+                        <span id="iam-text">I am a...</span> <br>
+                        <button name="type" class="<%= formData && formData.userType === 'customer' ? 'active' : 'inactive' %>" id="customer" onclick="toggleCustomer()">Customer</button>
+                        <button name="type" class="<%= formData && formData.userType === 'owner' ? 'active' : 'inactive' %>" id="owner" onclick=toggleOwner()>Store Owner</button>
+                    </div>
+                    <br>
+                </section>
+                <form action="/auth/register" method="POST" autocomplete="off">
+                    <input type="hidden" id="userType" name="userType" value="<%= formData ? formData.userType : '' %>">
+                    <input type="text" name="registerEmail" id="register-email" placeholder="someone@example.com" value="<%= formData ? formData.registerEmail : '' %>">
+                    <br>
+                    <label class="register-header">Password</label>
+                    <input type="password" name="registerPass" id="register-password" placeholder="passWord123?" value="<%= formData ? formData.registerPass : '' %>">
+                    <br><br>
+                    <label class="register-header">Confirm Password</label>
+                    <input type="password" name="registerConfirmPass" id="register-confirm-password" placeholder="passWord123?" value="<%= formData ? formData.registerConfirmPass : '' %>">
+                    <br><br>
+                    <label class="register-header">What should we call you?</label>
+                    <input type="text" name="registerName" id="register-name" placeholder="Your Name" value="<%= formData ? formData.registerName : '' %>">
+                    <br>
+                    <section>
+                        <input id="remember-me" style="width: 10px" type="checkbox" name="rememberMe"> Remember Me
+                    </section>
+                    <br>
+                    <% if (error) { %>
+                        <p style="color: red;"><%= error %></p>
+                    <% } %>
+                    <button id="register-button">Sign Me Up!</button>
+                </form>
+                
             </section>
-            <br>
-            <button id="register-button" onclick="store_page()">Create Account</button>
-        </section>
-    </div>
-</main>
+        </div>
+    </main>
 </body>
+
 </html>
