@@ -27,12 +27,12 @@
                 <section class="register-box" style="text-align:center">
                     <div id="iam-buttons">
                         <span id="iam-text">I am a...</span> <br>
-                        <button name="type" class="<%= formData && formData.userType === 'customer' ? 'active' : 'inactive' %>" id="customer" onclick="toggleCustomer()">Customer</button>
-                        <button name="type" class="<%= formData && formData.userType === 'owner' ? 'active' : 'inactive' %>" id="owner" onclick=toggleOwner()>Store Owner</button>
+                        <button name="type" class="<%= !formData || formData.userType === 'customer' ? 'active' : 'inactive' %>" id="customer" onclick="toggleCustomer()">Customer</button>
+                        <button name="type" class="<%= !formData || formData.userType === 'owner' ? 'active' : 'inactive' %>" id="owner" onclick=toggleOwner()>Store Owner</button>
                     </div>
                     <br>
                 </section>
-                <form action="/auth/register" method="POST" autocomplete="off">
+                <form action="/auth/register" method="POST">
                     <input type="hidden" id="userType" name="userType" value="<%= formData ? formData.userType : '' %>">
                     <input type="text" name="registerEmail" id="register-email" placeholder="someone@example.com" value="<%= formData ? formData.registerEmail : '' %>">
                     <br>

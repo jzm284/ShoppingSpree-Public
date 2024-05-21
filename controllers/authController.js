@@ -1,39 +1,14 @@
-//called on a GET request to /register
-exports.showRegister = function (req, res) {
-  //render the register page
-  res.render('register', { error: null, formData: null });
-  //get the data from the form
-  //validate the data
-  //hash the password
-  //create a new user
+// authController.js
+exports.showRegister = function(req, res) {
+  const errors = req.flash('error');
+  const formData = req.flash('formData')[0];  // Retrieve it and store it immediately
+
+  res.render('register', {
+      error: errors.length > 0 ? errors[0] : null,
+      formData: formData
+  });
 };
 
-
-//called on a POST request to /register
-exports.register = function (req, res) {
-  const email = req.body.registerEmail;
-  const password = req.body.registerPass;
-  const confirmPassword = req.body.registerConfirmPass;
-  const username = req.body.registerName;
-  let { isValid: validPassword, message: invalidPassMsg } = validatePassword(password);
-  if (checkBlank([email, password, confirmPassword, username])) {
-    res.render('register', { error: 'All fields are required', formData: req.body });
-  } else if (!validateEmail(email)) {
-    res.render('register', { error: 'Invalid email', formData: req.body });
-  } else if (password !== confirmPassword) {
-    res.render('register', { error: 'Passwords do not match', formData: req.body });
-  } else if (!validPassword) {
-    res.render('register', { error: invalidPassMsg, formData: req.body });
-    console.log('Invalid password')
-  } else { //success
-    console.log('User created')
-    res.redirect('/dashboard');
-  }
-};
-
-function checkBlank(fields) {
-  return fields.some(field => field === '');
-}
 
 //credit to emailregex.com for the regex
 function validateEmail(email) {
@@ -64,9 +39,45 @@ function validatePassword(password) {
   return { isValid, message };
 }
 
-exports.login = function (req, res) {
-  res.send('Login');
+function checkBlank(fields) {
+  return fields.some(field => field === '');
+}
+
+exports.showRegister = function (req, res) {
+  res.render('register', {
+      error: req.flash('error'),
+      formData: req.flash('formData')[0] // Flash returns an array, get the first item
+  });
 };
 
+exports.register = function (req, res) {
+  const { registerEmail, registerPass, registerConfirmPass, registerName } = req.body;
 
-
+  if (checkBlank([registerEmail, registerPass, registerConfirmPass, registerName])) {
+      req.flash('error', 'All fields are required');
+      req.flash('formData', req.body);
+      console.log('All fields are required');
+      res.redirect('/auth/register');
+  } else if (!validateEmail(registerEmail)) {
+      req.flash('error', 'Invalid email');
+      req.flash('formData', req.body);
+      console.log('Invalid email');
+      res.redirect('/auth/register');
+  } else if (registerPass !== registerConfirmPass) {
+      req.flash('error', 'Passwords do not match');
+      req.flash('formData', req.body);
+      console.log('Passwords do not match');
+      res.redirect('/auth/register');
+  } else {
+      const { isValid, message } = validatePassword(registerPass);
+      if (!isValid) {
+          req.flash('error', message);
+          req.flash('formData', req.body);
+          console.log(message);
+          return res.redirect('/auth/register');
+      } else {
+          console.log('User created');
+          res.redirect('/dashboard');
+      }
+  }
+};
