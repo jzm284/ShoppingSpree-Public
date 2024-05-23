@@ -28,6 +28,10 @@ app.get('/', (req, res) => {
 const authRoutes = require('./routes/authRoute');
 app.use('/auth', authRoutes);
 
+app.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+});
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
