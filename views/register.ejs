@@ -21,19 +21,20 @@
 
     <main>
         <div class="register-login">
-            <img src="/images/logo.png" style="width: 100%; height: 40%" id="logo">
+            <img src="/images/logo.png" class="logo" id="register-logo">
             <section>
                 <h2 style="text-align:left; margin-top:-5%">Create Account</h2>
                 <section class="register-box" style="text-align:center">
                     <div id="iam-buttons">
                         <span id="iam-text">I am a...</span> <br>
-                        <button name="type" class="<%= !formData || formData.userType === 'customer' ? 'active' : 'inactive' %>" id="customer" onclick="toggleCustomer()">Customer</button>
-                        <button name="type" class="<%= !formData || formData.userType === 'owner' ? 'active' : 'inactive' %>" id="owner" onclick=toggleOwner()>Store Owner</button>
+                        <button name="type" class="<%= !formData || formData.userType !== 'owner' ? 'active' : 'inactive' %>" class="acc-type-btn" id="customer-btn" onclick="toggleCustomer()">Customer</button>
+                        <button name="type" class="<%= !formData || formData.userType !== 'customer' ? 'active' : 'inactive' %>" class="acc-type-btn" id="owner-btn" onclick=toggleOwner()>Store Owner</button>
                     </div>
                     <br>
                 </section>
                 <form action="/auth/register" method="POST">
                     <input type="hidden" id="userType" name="userType" value="<%= formData ? formData.userType : '' %>">
+                    <label class="register-header">Email</label>
                     <input type="text" name="registerEmail" id="register-email" placeholder="someone@example.com" value="<%= formData ? formData.registerEmail : '' %>">
                     <br>
                     <label class="register-header">Password</label>
@@ -45,16 +46,18 @@
                     <label class="register-header">What should we call you?</label>
                     <input type="text" name="registerName" id="register-name" placeholder="Your Name" value="<%= formData ? formData.registerName : '' %>">
                     <br>
-                    <section>
-                        <input id="remember-me" style="width: 10px" type="checkbox" name="rememberMe"> Remember Me
-                    </section>
                     <br>
                     <% if (error) { %>
                         <p style="color: red;"><%= error %></p>
                     <% } %>
                     <button id="register-button">Sign Me Up!</button>
+                    <br><br>
                 </form>
-                
+                <section>
+                    <span>Already have an account?</span>
+                    <span> </span>
+                    <a href="/auth/login" style="color:white;""><u>Log in</u></a>
+                </section>
             </section>
         </div>
     </main>

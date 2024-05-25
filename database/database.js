@@ -20,6 +20,7 @@ const query =
     dateCreated DATE,
     lastLogin DATE
     )`;
+
 db.serialize(() => {
     db.run(query, (err) => {
         if (err) {

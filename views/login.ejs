@@ -19,8 +19,10 @@
 
     <main>
         <div class="register-login">
-            <img src="./images/logo.png" style="width: 100%; height: 40%" id="logo">
-            <section>
+            <div class="logo" id="login-logo">
+                <img src="/images/logo.png" draggable="false" style="width: 100%; height: 100%">
+            </div>
+            <section id="login-form">
                 <h2 style="text-align:left; margin-top:-5%; margin-bottom: 27px; font-size: 24px;">Login</h2>
                 <label id="register-email-header" type="text">Email</label>
                 <input type="text" name="registeremail" id="register-email" placeholder="someone@example.com">
@@ -28,13 +30,19 @@
                 <label id="register-password-header" type="text">Password</label>
                 <input type="password" name="registerpassword" id="register-password" placeholder="eggrollplant123?">
             </section>
-            <section>
+            <!--<section>
                 <input id="remember-me-box" style="width: 20px" type="checkbox">
                 <label id="remember-me-text">Remember Me</label>
             </section>
+            might implement this feature later
+            -->
             <br>
             <button id="login-button" onclick="">Login</button>
-            <form action="/auth/register" method="get">Don't have an account?<button id="register-page-button"><u>Sign Up</u></button>
+            <br><br>
+            <form action="/auth/register" method="get">Don't have an account?
+                <button id="register-page-button">
+                    <h3><u>Sign Up</u></h3>
+                </button>
             </form>
             </section>
         </div>

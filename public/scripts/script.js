@@ -1,23 +1,7 @@
-// //login stuff
-// let credentialsMap = {};
-
-// function storeCredentials() {
-//     const username = document.getElementById('username').value;
-//     const password = document.getElementById('password').value;
-
-//     // Storing the password in the map using the username as the key
-//     credentialsMap[username] = password;
-
-//     // Clearing the text boxes
-//     document.getElementById('username').value = '';
-//     document.getElementById('password').value = '';
-
-// }
-
-
+//interactions with owner/customer buttons on the registration page
 function toggleOwner() {
-let ownerButton = document.getElementById('owner');
-let customerButton = document.getElementById('customer');
+let ownerButton = document.getElementById('owner-btn');
+let customerButton = document.getElementById('customer-btn');
 let userType = document.getElementById('userType');
 ownerButton.classList.remove('inactive');
 customerButton.classList.remove('active');
@@ -26,10 +10,10 @@ customerButton.classList.add('inactive');
 userType.value = "owner";
 }
 
-
+//interactions with owner/customer buttons on the registration page
 function toggleCustomer() {
-let ownerButton = document.getElementById('owner');
-let customerButton = document.getElementById('customer');
+let ownerButton = document.getElementById('owner-btn');
+let customerButton = document.getElementById('customer-btn');
 let userType = document.getElementById('userType'); 
 ownerButton.classList.remove('active');
 customerButton.classList.remove('inactive');
