@@ -127,13 +127,17 @@ button {
     width: 100%;
 }
 
+.error-div {
+min-height: 5vh;
+}
+
 #register-page-button {
     background-color: transparent;
     border: none;
     color: white;
     padding: 10px 20px;
     text-align: center;
-    width: 30%;
+    width: fit-content;
 }
 
 #main-logo {

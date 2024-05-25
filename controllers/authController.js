@@ -1,9 +1,14 @@
-// authController.js
+// controllers/authController.js
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const db = require('../database/database');
 
+/**
+ * Function to show the register page, called on a GET request to /auth/register
+ * @param {The request object} req 
+ * @param {The response object} res 
+ */
 exports.showRegister = function (req, res) {
   const errors = req.flash('error');
   const formData = req.flash('formData')[0];
@@ -14,6 +19,11 @@ exports.showRegister = function (req, res) {
   });
 };
 
+/**
+ * Function to show the login page, called on a GET request to /auth/login
+ * @param {The request object} req 
+ * @param {The response object} res
+ */
 exports.showLogin = function (req, res) {
   const errors = req.flash('error');
   const formData = req.flash('formData')[0];
@@ -57,7 +67,7 @@ exports.register = async function (req, res) {
       //check if user with this email already exists
       const user = await checkExistingUser(registerEmail);
       if (user) {
-        req.flash('error', 'Account already exists with this email. Please log in');
+        req.flash('error', 'Account already exists with this email. Please log in or choose a different email.');
         req.flash('formData', req.body);
         return res.redirect('/auth/register');
       } else {
@@ -79,14 +89,21 @@ exports.login = async function (req, res) {
     req.flash('formData', req.body);
     console.log('All fields are required');
     return res.redirect('/auth/login');
+  } else if (!validateEmail(loginEmail)) {
+    req.flash('error', 'Please enter a valid email');
+    req.flash('formData', req.body);
+    console.log('Invalid email');
+    return res.redirect('/auth/login');
   }
 
   try {
     // Check if user with this email exists
     const user = await checkExistingUser(loginEmail);
+    console.log("This is the user: ", user);
+    console.log('loginPass', loginPass);  
     if (!user) {
       console.log('User does not exist with this email');
-      req.flash('error', 'User does not exist with this email');
+      req.flash('error', 'No user exists with this email. Please click "Sign Up" below');
       req.flash('formData', req.body);
       return res.redirect('/auth/login');
     }
