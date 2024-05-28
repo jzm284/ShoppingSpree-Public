@@ -27,8 +27,8 @@
                 <section class="register-box" style="text-align:center">
                     <div id="iam-buttons">
                         <span id="iam-text">I am a...</span> <br>
-                        <button name="type" class="<%= !formData || formData.userType !== 'owner' ? 'active' : 'inactive' %>" class="acc-type-btn" id="customer-btn" onclick="toggleCustomer()">Customer</button>
-                        <button name="type" class="<%= !formData || formData.userType !== 'customer' ? 'active' : 'inactive' %>" class="acc-type-btn" id="owner-btn" onclick=toggleOwner()>Store Owner</button>
+                        <button name="type" class="<%= !formData || formData.userType !== 'owner' ? 'active' : 'inactive' %>" class="acc-type-btn" id="customer-btn" onclick="toggleCustomer()"><b>Customer</b></button>
+                        <button name="type" class="<%= !formData || formData.userType !== 'customer' ? 'active' : 'inactive' %>" class="acc-type-btn" id="owner-btn" onclick=toggleOwner()><b>Store Owner</b></button>
                     </div>
                     <br>
                 </section>
@@ -51,7 +51,7 @@
                         <p style="color: red;"><%= error %></p>
                     <% } %>
                     <button id="register-button">Sign Me Up!</button>
-                    <br><br>
+                    <br>
                 </form>
                 <section>
                     <span>Already have an account?</span>

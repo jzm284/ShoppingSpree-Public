@@ -1,0 +1,68 @@
+:root {
+  --site-yellow: #ffc533;
+  --secondary-yellow: hsl(43, 90%, 67%);
+  --main-blue: hsl(218, 58%, 12%);
+  --lighter-blue: hsl(218, 58%, 25%);
+  --darker-blue: hsl(221, 54%, 7%);
+  --text-color: #383636;
+}
+
+
+body {
+  background-color: var(--main-blue);
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  color: white;
+  background-repeat: no-repeat;
+  background-size: 100% 100vh;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.home-icon {
+  height: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+display: block;
+}
+
+.navbar {
+  background-color: var(--darker-blue);
+}
+
+.nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-item {
+  margin: 0 1em;
+  font-size: 1.5em;
+}
+
+.center {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+  height: 100vh;
+  width: 35vw;
+  background-color: var(--darker-blue);
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: var(--site-yellow);
+  font-weight: bold;
+  padding: 0.5em 1em;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-item a:hover {
+  background-color: var(--site-yellow);
+  color: var(--text-color);
+  border-radius: 5px;
+}

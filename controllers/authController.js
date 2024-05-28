@@ -73,6 +73,7 @@ exports.register = async function (req, res) {
       } else {
         //success case, create new user
         await createUser(registerEmail, registerPass, registerName, userType);
+        req.session.loggedIn = true;
         return res.redirect('/dashboard');
       }
     }
@@ -99,10 +100,7 @@ exports.login = async function (req, res) {
   try {
     // Check if user with this email exists
     const user = await checkExistingUser(loginEmail);
-    console.log("This is the user: ", user);
-    console.log('loginPass', loginPass);  
     if (!user) {
-      console.log('User does not exist with this email');
       req.flash('error', 'No user exists with this email. Please click "Sign Up" below');
       req.flash('formData', req.body);
       return res.redirect('/auth/login');
@@ -111,7 +109,6 @@ exports.login = async function (req, res) {
     // Compare the hashed password
     const isMatch = await bcrypt.compare(loginPass, user.password);
     if (!isMatch) {
-      console.log('Incorrect password');
       req.flash('error', 'Incorrect password');
       req.flash('formData', req.body);
       return res.redirect('/auth/login');
@@ -131,6 +128,7 @@ exports.login = async function (req, res) {
         }
       });
     });
+    req.session.loggedIn = true;
     return res.redirect('/dashboard');
 
   } catch (err) {

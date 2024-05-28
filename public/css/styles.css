@@ -1,14 +1,24 @@
+:root {
+    --site-yellow: hsl(43, 100%, 60%);
+    --secondary-yellow: hsl(43, 90%, 67%);
+    --main-blue: hsl(218, 58%, 12%);
+    --lighter-blue: hsl(218, 58%, 25%);
+    --darker-blue: hsl(221, 54%, 7%);
+    --darkest-blue: hsl(223, 50%, 5%);
+    --text-color: #383636;
+  }
+
 body {
     background-color: #9fa0cc;
     margin: 0;
     max-width: 100%;
     max-height: 100%;
     background-image: url("../images/background.jpg");
-    font-family: 'Abel', sans-serif;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: white;
     overflow-y: hidden;
     background-repeat: no-repeat;
-    background-size: 100% 100vh;
+    background-size: 100vw 100vh;
 }
 
 .logo {
@@ -27,24 +37,7 @@ body {
     align-items: top;
     height: 100vh;
     width: 35vw;
-    background-color: rgb(1, 3, 22);
-}
-
-.navbar {
-    background-color: #002366;
-    padding: 1em;
-}
-
-.nav-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-
-.nav-item {
-    margin: 0 1em;
+    background-color: var(--darker-blue);
 }
 
 #home-logo {
@@ -68,38 +61,23 @@ body {
 #get-started-btn {
     width: 50%;
     margin-left: 25%;
-    background-color: #FFD700;
+    background-color: var(--site-yellow);
     border: none;
-    color: #002366;
+    color: var(--main-blue);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    outline: 1px solid #002366;
+    outline: 1px solid var(--main-blue);
     font-family: 'Abel', sans-serif;
     border-radius: 5px;
 }
 
 #get-started-btn:hover {
     cursor: grab;
-    background-color: rgb(231, 206, 15);
+    background-color: var(--secondary-yellow);
 }
-
-.nav-item a {
-    text-decoration: none;
-    color: #FFD700;
-    font-weight: bold;
-    padding: 0.5em 1em;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.nav-item a:hover {
-    background-color: #FFD700;
-    color: #002366;
-    border-radius: 5px;
-}
-
 
 input {
     width: 98%;
@@ -109,13 +87,13 @@ input {
 button {
     background-color: #f0f0f6;
     border: none;
-    color: #090018;
+    color: var(--darker-blue);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    outline: 1px solid #090018;
+    outline: 1px solid black;
     font-family: 'Abel', sans-serif;
     width: 49.4%;
 }
@@ -150,7 +128,6 @@ min-height: 5vh;
 
 #iam-text {
     font-size: 20px;
-    margin-top: 10px;
 }
 
 .register-login {
@@ -161,7 +138,7 @@ min-height: 5vh;
     min-height: 100vh;
     height: 96.5vh;
     padding: 1%;
-    background-color: #090018;
+    background-color: var(--darkest-blue);
     overflow-y:auto;
 }
 

@@ -12,7 +12,7 @@ app.use(session({
   secret: 'thisIstheSecretKeyForNowyoUKnowIt',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: process.env.NODE_ENV === 'production', sameSite: 'Lax' }
+  cookie: { secure: process.env.NODE_ENV === 'production', sameSite: 'Lax', httpOnly: true}
 }));
 
 app.use(flash());
