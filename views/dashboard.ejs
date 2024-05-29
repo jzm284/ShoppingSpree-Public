@@ -29,10 +29,10 @@
                 <div class="profile-item" id="acc-details">
                     <span style="font-size: 24px;">Account Details</span>
                     <div class="sidebar-content">
-                        <p>Name: </p>
-                        <p>Email: </p>
-                        <p>Account Type: </p>
-                        <p>Member since: </p>
+                        <p>Name: <%= profile.name%> </p>
+                        <p>Email: <%= profile.email%></p>
+                        <p>Account Type: <%= profile.userType%></p>
+                        <p>Member since: <%= profile.date%></p>
                     </div>
                     <button class="profile-button" onclick="toggleProfileItem(this.parentNode)">
                         <img src=./images/expand.png>
