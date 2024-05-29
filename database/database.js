@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 
+//SQLite database connection
 const db = new sqlite3.Database('./database/database.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
     if (err) {
         console.error('Error opening database', err.message);
@@ -8,7 +9,7 @@ const db = new sqlite3.Database('./database/database.db', sqlite3.OPEN_READWRITE
     }
 });
 
-
+//our user table schema
 const query =
     `CREATE TABLE IF NOT EXISTS users 
     (
