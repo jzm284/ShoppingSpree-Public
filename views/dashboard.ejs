@@ -6,19 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="css/dashboard.css">
+    <script src="scripts/script.js"></script>
 </head>
 
 <body>
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="nav-item" style="margin-right: auto"><a href="/"><img class="home-icon" src="./images/home-icon.png"> </a></li>
-            <li class="nav-item" style="margin: auto"><a href="#">Make New List</a></li>
-            <li class="nav-item" style="margin: auto"><a href="#">My Past Lists</a></li>
-            <li class="nav-item" style="margin: auto"><a href="#">About</a></li>
-            <li class="nav-item" style="margin: auto"><a href="#">Contact Us</a></li>
-            <li class="nav-item" style="margin: auto"><a href="#">Log Out</a></li>
+            <li class="icon" style="margin-right: auto"><a href="/"><img src="./images/home-icon.png"> </a></li>
+            <li class="nav-item" style="margin: auto"><button onclick="toggleDashButtons(this)">Make New List</button>
+            </li>
+            <li class="nav-item" style="margin: auto"><button onclick="toggleDashButtons(this)" href="#">My Past
+                    Lists</button></li>
+            <li class="nav-item" style="margin: auto"><button onclick="toggleDashButtons(this)" href="#">About
+                    Us</button></li>
+            <li class="icon" style="margin-left: auto"><button id="profile-icon" onclick="toggleProfileBar()"><img
+                        src="./images/profile.png"></button></li>
         </ul>
     </nav>
+    <main>
+        <div class="sidebar" id="profile-bar">
+            <div class="profile-list">
+                <div class="profile-item" id="acc-details">
+                    <span style="font-size: 24px;">Account Details</span>
+                    <div class="sidebar-content">
+                        <p>Name: </p>
+                        <p>Email: </p>
+                        <p>Account Type: </p>
+                        <p>Member since: </p>
+                    </div>
+                    <button class="profile-button" onclick="toggleProfileItem(this.parentNode)">
+                        <img src=./images/expand.png>
+                    </button>
+                </div>
+                <div class="profile-item"><button class="profile-button"
+                        onclick="toggleProfileItem(this.parentNode)"><img src=./images/expand.png></button></div>
+                <div class="profile-item"><button class="profile-button"
+                        onclick="toggleProfileItem(this.parentNode)"><img src=./images/expand.png></button></div>
+            </div>
+        </div>
+        <section class="main-content"></section>
+    </main>
 </body>
 
 </html>

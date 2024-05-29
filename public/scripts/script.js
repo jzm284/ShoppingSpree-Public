@@ -22,6 +22,45 @@ customerButton.classList.add('active');
 userType.value = "customer";
 }
 
+//function to set dashboard buttons to active
+function toggleDashButtons(pressed) {
+    //get all three buttons
+    let dashButtons = document.querySelectorAll('.nav-item button');
+    //make pressed active and all the others inactive
+    dashButtons.forEach(button => {
+        if (button === pressed) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+}
+
+/**
+ * Function to toggle the profile sidebar on the dashboard
+ */
+function toggleProfileBar() {
+let profileBar = document.getElementById('profile-bar');
+let profileIcon = document.getElementById('profile-icon');
+console.log(profileIcon);
+profileBar.classList.toggle('sidebar-active');
+if (profileIcon.classList.contains('icon-active')) {
+profileIcon.style.outline = "none";
+profileIcon.style.borderRadius = "0%";
+} else {
+profileIcon.style.outline = "2px solid var(--site-yellow)";
+profileIcon.style.borderRadius = "50%";
+}
+profileIcon.classList.toggle('icon-active');
+};
+
+function toggleProfileItem(profileItem) {
+    profileItem.classList.toggle('active');
+    let sidebarContent = profileItem.querySelector('.sidebar-content');
+    sidebarContent.classList.toggle('active');
+}
+
+
 // function store_page(){
 // let ownerButton = document.getElementById('owner');
 // let customerButton = document.getElementById('customer');

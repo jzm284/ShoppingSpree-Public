@@ -128,8 +128,15 @@ exports.login = async function (req, res) {
         }
       });
     });
-    req.session.loggedIn = true;
-    return res.redirect('/dashboard');
+    req.session.regenerate((err) => {
+      if (err) {
+          console.log('Session regeneration error:', err);
+          return res.status(500).send('Internal server error');
+      }
+      req.session.loggedIn = true;
+      req.session.user = { name: user.name, email: user.email };
+      return res.redirect('/dashboard');
+  });
 
   } catch (err) {
     console.error('Error during login process', err);
