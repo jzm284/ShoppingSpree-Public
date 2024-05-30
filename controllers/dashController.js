@@ -1,13 +1,17 @@
 const api = require('./apiController');
+const auth = require('./authController');
 
 exports.showDashboard = async function (req, res) {
     //make an api call to get the user data
     const profileData = await api.getProfileData(req.session.user.email);
+    const error = req.flash('error');
+    const success = req.flash('success');
     res.render('dashboard', {
         profile: profileData,
+        error: error.length > 0 ? error[0] : null,
+        success: success.length > 0 ? success[0] : null,
     });
 };
-
 
 exports.logout = function (req, res) {
     req.session.destroy();

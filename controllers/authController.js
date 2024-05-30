@@ -230,7 +230,7 @@ function validateEmail(email) {
  * where isValid is true if the password passes all checks, else false,
  * and message is a string with the reason the password is invalid (null if valid)}
  */
-function validatePassword(password) {
+exports.validatePassword = function validatePassword(password) {
   let isValid = true;
   let message = null;
 
@@ -259,3 +259,87 @@ function validatePassword(password) {
 function checkBlank(fields) {
   return fields.some((field) => field === "");
 }
+
+
+/**
+ * A function to change the user's password
+ * @param {The HTTP request object} req 
+ * @param {The HTTP response object} res 
+ * @returns {redirects to /dashboard on successful password change}
+ */
+exports.changePassword = async function (req, res) {
+  const { oldPass, newPass, confirmPass } = req.body;
+  const user = req.session.user;
+
+  if (!user) {
+    return res.json({ error: 'Unauthorized user' });
+  }
+
+  if (checkBlank([oldPass, newPass, confirmPass])) {
+    return res.json({ error: 'All fields are required' });
+  }
+  if (user.email === 'test@test.com') {
+    return res.json({ error: 'Cannot change password for test account' });
+  }
+
+  if (newPass !== confirmPass) {
+    return res.json({ error: 'Passwords do not match' });
+  }
+
+  if (oldPass === newPass) {
+    return res.json({ error: 'New password cannot be the same as the old password' });
+  }
+
+  const { isValid, message } = auth.validatePassword(newPass);
+  if (!isValid) {
+    return res.json({ error: message });
+  }
+
+  try {
+    const accDetails = await new Promise((resolve, reject) => {
+      db.get(`SELECT * FROM users WHERE email = ?`, user.email, (err, row) => {
+        if (err) {
+          console.error("Error checking for existing user", err);
+          reject(err);
+        } else {
+          resolve(row);
+        }
+      });
+    });
+
+    const isValidPass = await bcrypt.compare(oldPass, accDetails.password, (err, result) => {
+      if (err) {
+        console.error("Error comparing passwords", err);
+        return false;
+      }
+      return result;
+    });
+    if (!isValidPass) {
+      return res.json({ error: 'Old password is incorrect.' });
+    }
+  } catch (error) {
+    console.error("Error checking old password", error);
+    return res.json({ error: 'An error occurred while changing the password' });
+  }
+
+  try {
+    const hashedPass = await bcrypt.hash(newPass, 10);
+
+    const updateQuery = `UPDATE users SET password = ? WHERE email = ?`;
+    await new Promise((resolve, reject) => {
+      db.run(updateQuery, [hashedPass, user.email], (err) => {
+        if (err) {
+          console.error("Error updating password", err);
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+
+    return res.json({ success: 'Password successfully changed' });
+  } catch (error) {
+    console.error("Error updating password", error);
+    return res.json({ error: 'An error occurred while changing the password' });
+  }
+};

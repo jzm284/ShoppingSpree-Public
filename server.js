@@ -10,10 +10,10 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.use(session({
-  secret: 'thisIstheSecretKeyForNowyoUKnowIt',
+  secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: process.env.NODE_ENV === 'production', sameSite: 'Lax', httpOnly: true}
+  cookie: { secure: process.env.NODE_ENV === 'production', sameSite: 'Lax', httpOnly: true, maxAge: 3600000}
 }));
 
 app.use(flash());

@@ -1,4 +1,6 @@
 const db = require("../database/database");
+const auth = require('./authController');
+const bcrypt = require('bcrypt');
 
 exports.getProfileData = async function (email) {
   try {
@@ -52,6 +54,8 @@ exports.deleteAccount = async function (req, res) {
     console.log('session', req.session);
     if (!user) {
       throw new Error("Unauthorized user.");
+    } else if (user.email === 'test@test.com') {
+        throw new Error("Cannot delete test account.");
     }
     await new Promise((resolve, reject) => {
       db.run(`DELETE FROM users WHERE email = ?`, user.email, (err) => {
@@ -74,6 +78,8 @@ exports.deleteAccount = async function (req, res) {
     });
   } catch (error) {
     console.error("Failed to delete account", error);
-    throw new Error("Unable to delete account.");
+    res.redirect("/dashboard");
   }
 };
+
+

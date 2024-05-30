@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "Are you sure?<br> Press again to delete account.<br><b>There is no undoing this action.</b>";
     } else {
       // Second click, perform the deletion
-      console.log("Account deletion confirmed.");
       deleteAccount();
     }
   });
@@ -91,11 +90,16 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButton.style.width = "75%";
     deleteButton.style.height = "15%";
     deleteButton.style.left = "12.5%";
+    deleteButton.disabled = false;
     isConfirming = false;
   }
 
   function deleteAccount() {
     deleteButton.innerHTML = "Deleting...";
+    deleteButton.disabled = true;
+    deleteButton.width = "75%"; 
+    deleteButton.height = "15%";
+    deleteButton.left = "12.5%";
     fetch("/api/delete-account", {
       method: "DELETE",
     })
@@ -106,11 +110,38 @@ document.addEventListener("DOMContentLoaded", function () {
           window.location.href = "/";
         } else {
           alert("Failed to delete account: " + data.message);
+          resetButton();
         }
       })
       .catch((error) => {
         console.error("Error:", error);
         alert("An error occurred while deleting the account.");
+        resetButton();
       });
   }
 });
+
+async function changePassword() {
+    const oldPass = document.getElementById('old-pass').value;
+    const newPass = document.getElementById('new-pass').value;
+    const confirmPass = document.getElementById('confirm-pass').value;
+
+    const response = await fetch('/auth/change-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ oldPass, newPass, confirmPass }),
+    });
+
+    const result = await response.json();
+    const message = document.getElementById('error-msg');
+    if (result.error) {
+        message.innerText = result.error;
+        message.style.color = 'red';
+    } else {
+        message.innerText = 'Password successfully changed';
+        message.style.color = 'green';
+    }
+    console.log('ran this fn', result);
+}

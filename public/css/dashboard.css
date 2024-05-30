@@ -7,7 +7,6 @@
   --text-color: #383636;
 }
 
-
 body {
   background-color: var(--main-blue);
   margin: 0;
@@ -16,7 +15,8 @@ body {
   color: white;
   background-repeat: no-repeat;
   background-size: 100% 100vh;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .sidebar {
@@ -34,7 +34,6 @@ body {
 .sidebar-active {
   transform: translateX(0);
 }
-
 
 .icon {
   text-decoration: none;
@@ -114,18 +113,35 @@ body {
 }
 
 .profile-item.active {
-    height: 50vh;
-    transition: height 0.5s ease-in-out;
+  height: 60vh;
+  transition: height 0.5s ease-in-out;
 }
 
 .sidebar-content {
   display: none;
   margin-left: 5%;
+  margin-top: 5%;
   outline: 1px solid red;
 }
 
-.sidebar-content.active{
-display: block;
+.sidebar-content.active {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 1em;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.5em;
+  box-sizing: border-box;
 }
 
 .profile-action-btn {
@@ -139,18 +155,32 @@ display: block;
   cursor: grab;
 }
 
+.error-div {
+  min-height: 5vh;
+}
+
+#change-pass {
+  position: absolute;
+  bottom: 7.5%;
+  color: blue;
+  outline: 3px solid blue;
+  height: 10%;
+  width: 75%;
+  left: 12.5%;
+  font-size: 1em;
+}
+
 #upgrade-acc {
-top: 50%;
-color: green;
-outline: 3px solid green;
+  top: 50%;
+  color: green;
+  outline: 3px solid green;
 }
 
 #delete-acc {
-top: 75%;
-color: red;
-outline: 3px solid red;
+  top: 75%;
+  color: red;
+  outline: 3px solid red;
 }
-
 
 .profile-button {
   position: absolute;

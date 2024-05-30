@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/apiController');
+const apiController = require('../controllers/apiController');
 
-router.get('/profile-data', authController.getProfileData);
-router.delete('/delete-account', authController.deleteAccount); 
+router.get('/profile-data', apiController.getProfileData);
+router.delete('/delete-account', apiController.deleteAccount); 
 
 module.exports = router;

@@ -40,8 +40,29 @@
                         <img src=./images/expand.png>
                     </button>
                 </div>
-                <div class="profile-item"><button class="profile-button"
-                        onclick="toggleProfileItem(this.parentNode)"><img src=./images/expand.png></button></div>
+                <div class="profile-item">
+                    <span style="font-size: 24px;">Security</span>
+                    <div class="sidebar-content">
+                        <h3>Change Password</h3>
+                            <div class="form-group">
+                                <label for="old-pass">Old Password</label>
+                                <input type="password" name="old-pass" id="old-pass">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-pass">New Password</label>
+                                <input type="password" name="new-pass" id="new-pass">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-pass">Confirm New Password</label>
+                                <input type="password" name="confirm-pass" id="confirm-pass">
+                            </div>
+                            <div class="error-div">
+                                <p id="error-msg"></p>
+                            </div>
+                            <button onclick="changePassword()" id="change-pass">Submit</button>
+                    </div>
+                    
+                    <button class="profile-button"onclick="toggleProfileItem(this.parentNode)"><img src=./images/expand.png></button></div>
                 <div class="profile-item"><button class="profile-button"
                         onclick="toggleProfileItem(this.parentNode)"><img src=./images/expand.png></button></div>
             </div>
