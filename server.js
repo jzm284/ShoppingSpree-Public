@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const session = require('express-session');
 const flash = require('connect-flash');
+require('dotenv').config();
 
 app.set('view engine', 'ejs');
 
@@ -30,6 +31,9 @@ app.use('/auth', authRoutes);
 
 const dashRoutes = require('./routes/dashRoute');
 app.use('/dashboard', dashRoutes); 
+
+const apiRoutes = require('./routes/apiRoute');
+app.use('/api', apiRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

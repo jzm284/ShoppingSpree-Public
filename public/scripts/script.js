@@ -1,65 +1,26 @@
 //interactions with owner/customer buttons on the registration page
 function toggleOwner() {
-let ownerButton = document.getElementById('owner-btn');
-let customerButton = document.getElementById('customer-btn');
-let userType = document.getElementById('userType');
-ownerButton.classList.remove('inactive');
-customerButton.classList.remove('active');
-ownerButton.classList.add('active');
-customerButton.classList.add('inactive');
-userType.value = "owner";
+  let ownerButton = document.getElementById("owner-btn");
+  let customerButton = document.getElementById("customer-btn");
+  let userType = document.getElementById("userType");
+  ownerButton.classList.remove("inactive");
+  customerButton.classList.remove("active");
+  ownerButton.classList.add("active");
+  customerButton.classList.add("inactive");
+  userType.value = "owner";
 }
 
 //interactions with owner/customer buttons on the registration page
 function toggleCustomer() {
-let ownerButton = document.getElementById('owner-btn');
-let customerButton = document.getElementById('customer-btn');
-let userType = document.getElementById('userType'); 
-ownerButton.classList.remove('active');
-customerButton.classList.remove('inactive');
-ownerButton.classList.add('inactive');
-customerButton.classList.add('active');
-userType.value = "customer";
+  let ownerButton = document.getElementById("owner-btn");
+  let customerButton = document.getElementById("customer-btn");
+  let userType = document.getElementById("userType");
+  ownerButton.classList.remove("active");
+  customerButton.classList.remove("inactive");
+  ownerButton.classList.add("inactive");
+  customerButton.classList.add("active");
+  userType.value = "customer";
 }
-
-//function to set dashboard buttons to active
-function toggleDashButtons(pressed) {
-    //get all three buttons
-    let dashButtons = document.querySelectorAll('.nav-item button');
-    //make pressed active and all the others inactive
-    dashButtons.forEach(button => {
-        if (button === pressed) {
-            button.classList.add('active');
-        } else {
-            button.classList.remove('active');
-        }
-    });
-}
-
-/**
- * Function to toggle the profile sidebar on the dashboard
- */
-function toggleProfileBar() {
-let profileBar = document.getElementById('profile-bar');
-let profileIcon = document.getElementById('profile-icon');
-console.log(profileIcon);
-profileBar.classList.toggle('sidebar-active');
-if (profileIcon.classList.contains('icon-active')) {
-profileIcon.style.outline = "none";
-profileIcon.style.borderRadius = "0%";
-} else {
-profileIcon.style.outline = "2px solid var(--site-yellow)";
-profileIcon.style.borderRadius = "50%";
-}
-profileIcon.classList.toggle('icon-active');
-};
-
-function toggleProfileItem(profileItem) {
-    profileItem.classList.toggle('active');
-    let sidebarContent = profileItem.querySelector('.sidebar-content');
-    sidebarContent.classList.toggle('active');
-}
-
 
 // function store_page(){
 // let ownerButton = document.getElementById('owner');
@@ -75,7 +36,7 @@ function toggleProfileItem(profileItem) {
 // function typeUser(){
 //     let type = document.getElementsByName('type');
 //     let value = "";
-    
+
 // }
 
 // function submit(){
@@ -195,14 +156,14 @@ function toggleProfileItem(profileItem) {
 //             let wallCheck = document.getElementById("wall-check");
 //             document.getElementById("edit-box").style.visibility = "visible";
 //             document.getElementById("button-name").innerHTML = "Button coordinates: (" + (selectedI + 1) + ", " + (selectedJ + 1) + ")";
-            
+
 //             // Display the current state of the node in the edit box
 //             wallCheck.checked = grid[selectedI][selectedJ].isWall;
 //             wallCheck.onchange = function() {
 //                 grid[selectedI][selectedJ].isWall = wallCheck.checked;
 //                 button.style.backgroundColor = wallCheck.checked ? "red" : "";
 //             };
-            
+
 //             renderLabelsForNode(selectedI, selectedJ);
 //         });
 //     });
@@ -296,7 +257,6 @@ function toggleProfileItem(profileItem) {
 // //GET LABELS FROM CUSTOMER INPUTS
 // const customerListContainer = document.getElementById("customer_list_container");
 // const customerInputs = Array.from(customerListContainer.children);
-
 
 // function getCustomerLabels() {
 //     let results = [];
@@ -395,7 +355,6 @@ function toggleProfileItem(profileItem) {
 
 //     return neighbors;
 // }
-
 
 // function containsAllLabels(collectedLabels, customerLabels) {
 //     for (let label of customerLabels) {

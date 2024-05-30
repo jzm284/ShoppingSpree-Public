@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="css/dashboard.css">
-    <script src="scripts/script.js"></script>
+    <script src="scripts/dash-script.js"></script>
 </head>
 
 <body>
@@ -33,6 +33,8 @@
                         <p>Email: <%= profile.email%></p>
                         <p>Account Type: <%= profile.userType%></p>
                         <p>Member since: <%= profile.date%></p>
+                        <button class="profile-action-btn" id="upgrade-acc" onclick="upgradeAccount()">Upgrade Account</button>
+                        <button class="profile-action-btn" id="delete-acc">Delete Account</button>
                     </div>
                     <button class="profile-button" onclick="toggleProfileItem(this.parentNode)">
                         <img src=./images/expand.png>

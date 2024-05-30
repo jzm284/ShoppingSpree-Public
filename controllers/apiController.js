@@ -7,9 +7,9 @@ exports.getProfileData = async function (email) {
       db.get(`SELECT * FROM users WHERE email = ?`, email, (err, row) => {
         if (err) {
           console.error("Error checking for existing user", err);
-          reject(err); // This will throw an error that can be caught by the catch block
+          reject(err);
         } else {
-          console.log('Found user:', row);
+          console.log("Found user:", row);
           resolve(row);
         }
       });
@@ -17,9 +17,12 @@ exports.getProfileData = async function (email) {
 
     const name = accDetails.username;
     const date = formatDate(accDetails.dateCreated);
-    console.log('Date', date);
+    console.log("Date", date);
     //return the userType with a capital first letter
-    const userType = accDetails.userType.charAt(0).toUpperCase() + accDetails.userType.slice(1) + " (Free)";
+    const userType =
+      accDetails.userType.charAt(0).toUpperCase() +
+      accDetails.userType.slice(1) +
+      " (Free)";
 
     return { name, email, userType, date };
   } catch (error) {
@@ -42,3 +45,35 @@ function formatDate(date) {
   const year = dateObj.getFullYear();
   return `${month} ${day}, ${year}`;
 }
+
+exports.deleteAccount = async function (req, res) {
+  try {
+    const user = req.session.user;
+    console.log('session', req.session);
+    if (!user) {
+      throw new Error("Unauthorized user.");
+    }
+    await new Promise((resolve, reject) => {
+      db.run(`DELETE FROM users WHERE email = ?`, user.email, (err) => {
+        if (err) {
+          console.error("Error deleting user", err);
+          reject(err);
+        } else {
+          req.session.destroy((err) => {
+            if (err) {
+              return res.status(500).json({ error: "Failed to log out" });
+            }
+            res.json({
+              message: "Account successfully deleted: " + user.email,
+              status: "success",
+            });
+          });
+          resolve();
+        }
+      });
+    });
+  } catch (error) {
+    console.error("Failed to delete account", error);
+    throw new Error("Unable to delete account.");
+  }
+};

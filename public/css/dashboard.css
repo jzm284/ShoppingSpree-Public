@@ -114,7 +114,7 @@ body {
 }
 
 .profile-item.active {
-    height: 40vh;
+    height: 50vh;
     transition: height 0.5s ease-in-out;
 }
 
@@ -127,6 +127,30 @@ body {
 .sidebar-content.active{
 display: block;
 }
+
+.profile-action-btn {
+  display: inline-block;
+  position: absolute;
+  left: 12.5%;
+  width: 75%;
+  height: 15%;
+  margin-top: 5%;
+  font-size: 1em;
+  cursor: grab;
+}
+
+#upgrade-acc {
+top: 50%;
+color: green;
+outline: 3px solid green;
+}
+
+#delete-acc {
+top: 75%;
+color: red;
+outline: 3px solid red;
+}
+
 
 .profile-button {
   position: absolute;
