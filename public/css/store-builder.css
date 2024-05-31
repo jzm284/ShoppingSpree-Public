@@ -1,0 +1,145 @@
+:root {
+    --site-yellow: #ffc533;
+    --secondary-yellow: hsl(43, 90%, 67%);
+    --main-blue: hsl(218, 58%, 12%);
+    --lighter-blue: hsl(218, 58%, 25%);
+    --darker-blue: hsl(221, 54%, 7%);
+    --text-color: #383636;
+}
+
+body {
+    background-color: var(--lighter-blue);
+    margin: 0;
+    max-width: 100%;
+    max-height: 100%;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    background-repeat: no-repeat;
+}
+
+.main-body {
+    display: flex;
+}
+
+#floor-plan {
+    min-height: 200px;
+    min-width: 200px;
+    width: 70%;
+    height: 80%;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.header {
+    margin: 1.5em;
+}
+
+.ctrl-panel {
+    visibility: visible;
+    width: 25%;
+    color: white;
+    height: 100vh;
+    background-color: var(--darker-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.params {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+}
+
+.submit-buttons {
+    width: 50%;
+    margin: 5% 25%;
+    height: 5vh;
+    font-size: 1em;
+}
+
+
+.form-group {
+    margin-bottom: 1em;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.form-group input {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+#add-items {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+#x-dim,
+#y-dim {
+    display: inline-block;
+    width: calc(50% - 0.5em);
+    margin-right: 0.5em;
+}
+
+.dim-info {
+    display: block;
+    text-align: center;
+    font-size: 0.75em;
+    margin-top: 0.5em;
+}
+
+#x-dim+#y-dim {
+    margin-right: 0;
+    /* Remove margin from the last input */
+}
+
+
+#store-canvas {
+    gap: 0px;
+    overflow-x: auto;
+    overflow-y: auto;
+    white-space: nowrap;
+    max-height: 95vh;
+    margin: auto;
+}
+
+#section-descriptor {
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    text-align: center;
+    margin: auto;
+    justify-content: space-evenly;
+    width: 90%;
+    height: 35vh;
+    outline: 1px solid white;
+}
+
+#wall-check-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 75%;
+    margin: 0 1em;
+}
+
+.map-button.active {
+    background-color: gray;
+}

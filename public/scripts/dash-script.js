@@ -161,6 +161,11 @@ async function logOut() {
     }
 }
 
+function goToStoreBuilder() {
+    window.location.href = "/dashboard/store-builder";
+}
+
+
 let first = true;
 document.addEventListener("keypress", function (event) {
     let keycode = event.keyCode ? event.keyCode : event.which;
@@ -196,62 +201,6 @@ document.addEventListener("keypress", function (event) {
         document.getElementById("customer-list-input").value = "";
     }
 });
-
-function generateGrid() {
-    const x = parseInt(document.getElementById('x-dim').value, 10);
-    const y = parseInt(document.getElementById('y-dim').value, 10);
-    grid = new Array(x);
-    for (let i = 0; i < x; i++) {
-        grid[i] = new Array(y);
-    }
-    const container = document.getElementById('store-canvas');
-
-    // Clear existing grid if any
-    container.innerHTML = '';
-
-    for (let i = 0; i < y; i++) {
-        const row = document.createElement('div');
-        row.className = 'row';
-        for (let j = 0; j < x; j++) {
-            const button = document.createElement('button');
-            button.setAttribute('data-x', i);  // Set x coordinate
-            button.setAttribute('data-y', j);  // Set y coordinate
-            button.className = 'map-button';
-            button.style.width = "25px";
-            button.style.height = "25px";
-            grid[i][j] = new Node(i, j, "", false);
-
-            // Reflect the node's state on the button's appearance
-            button.style.backgroundColor = grid[i][j].isWall ? "red" : "";
-            row.appendChild(button);
-        }
-        container.appendChild(row);
-        container.style.display = 'grid';
-    }
-    listenMapButtons();
-}
-
-function listenMapButtons() {
-    let mapButtons = document.querySelectorAll(".map-button");
-    mapButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            selectedI = parseInt(button.getAttribute('data-x')); // Get the i value from the data attribute
-            selectedJ = parseInt(button.getAttribute('data-y')); // Get the j value from the data attribute
-
-            let wallCheck = document.getElementById("wall-check");
-            document.getElementById("edit-box").style.display = "block";
-
-            // Display the current state of the node in the edit box
-            wallCheck.checked = grid[selectedI][selectedJ].isWall;
-            wallCheck.onchange = function() {
-                grid[selectedI][selectedJ].isWall = wallCheck.checked;
-                button.style.backgroundColor = wallCheck.checked ? "red" : "";
-            };
-            
-            //renderLabelsForNode(selectedI, selectedJ);
-        });
-    });
-}
 
 document.addEventListener("DOMContentLoaded", function() {
     let stores = [];
@@ -329,29 +278,4 @@ function submitList() {
             console.error("Error:", error);
             alert("An error occurred while saving the list.");
         });
-}
-
-
-/**
- * We represent the store layout as a 2D grid of the below Nodes.
- */
-class Node {
-    constructor(x, y, isWall) {
-        this.x = x;             // X-coordinate on the grid
-        this.y = y;             // Y-coordinate on the grid
-        this.isWall = isWall;   // Boolean indicating whether this node is a wall
-        this.labels = [];       // List of labels (grocery items present) at this node
-        this.visited = false;   
-        this.distance = Infinity;
-        this.prev = null; 
-    }
-
-    //Add a label to the node
-    //i.e. say that a grocery item is present at this node
-    addLabel(label) {
-        //Avoid duplicates
-        if (!this.labels.includes(label)) {
-            this.labels.push(label);
-        }
-    }
 }

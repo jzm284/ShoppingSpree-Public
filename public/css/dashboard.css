@@ -254,7 +254,7 @@ body {
   display: block;
   outline: 1px solid red;
   width: fit-content;
-  min-width: 60%;
+  min-width: 80%;
   height: 80%;
   margin: auto;
 }
@@ -386,7 +386,7 @@ body {
   border-radius : 6px;
 }
 
-.removeListItem:hover{
+.remove-list-item:hover{
   background-color: darkgrey;
 }
 
@@ -412,14 +412,10 @@ flex-direction: row;
 #store-canvas {
   background-color: white;
   margin: auto;
-  display: none;
+  visibility: hidden;
 }
 
 #store-canvas.active {
   display: block;
-}
-
-#edit-box{
-  display: none;
-  text-align: center;
+  visibility: visible;
 }

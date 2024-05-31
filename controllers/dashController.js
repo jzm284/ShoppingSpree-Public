@@ -28,3 +28,7 @@ exports.makeNewList = function (req, res) {
         user: req.session.user,
     });
 };
+
+exports.showStoreBuilder = function (req, res) {
+    res.render('store-builder');
+}

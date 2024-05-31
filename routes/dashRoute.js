@@ -11,7 +11,7 @@ function checkAuth(req, res, next) {
     if (process.env.NODE_ENV === "dev") {
       console.log("RUNNING IN DEV MODE, CHANGE BEFORE PRODUCTION");
       req.session.user = {
-        email: "test@test.com",
+        email: "owner@test.com",
       };
     }
     next();
@@ -24,5 +24,6 @@ function checkAuth(req, res, next) {
 router.get("/", checkAuth, dashController.showDashboard);
 router.get("/mylists", checkAuth, dashController.showMyLists);
 router.get("/newlist", checkAuth, dashController.makeNewList);
+router.get("/store-builder", checkAuth, dashController.showStoreBuilder);
 
 module.exports = router;

@@ -169,60 +169,11 @@ function toggleCustomer() {
 //     });
 
 //     // Separate keypress listener
-//     $(document).on('keypress', function(event) {
-//         if (selectedI === null || selectedJ === null) return; // No button selected
-//         let keycode = (event.keyCode ? event.keyCode : event.which);
-//         if (keycode == '13') {
-//             let tempInputText = document.getElementById('item_list_input').value;
-//             if (tempInputText == "") {
-//                 return; //if blank, do nothing
-//             }
-//             grid[selectedI][selectedJ].labels.push(tempInputText);
-//             renderLabelsForNode(selectedI, selectedJ); // Re-render after adding a new label
-//             document.getElementById('item_list_input').value = ""; // Clear the input box
-//         }
-//     });
-// }
 
-// function renderLabelsForNode(i, j) {
-//     const container = document.getElementById('item_list_container');
-//     while (container.firstChild) {
-//         container.removeChild(container.firstChild);
-//     }
 
-//     // Assuming you've already initialized the grid elsewhere with instances of Node.
-//     let labelsCopy = [...grid[i][j].labels].reverse();
 
-//     labelsCopy.forEach(label => {
-//         const newStore = createLabelDiv(label);
-//         container.appendChild(newStore);
-//     });
-// }
 
-// function createLabelDiv(labelText) {
-//     const newStore = document.createElement('div');
-//     newStore.classList.add("itemListContainer");
 
-//     const inputText = document.createElement('input');
-//     inputText.id = "listItem";
-//     inputText.disabled = true;
-//     inputText.value = labelText;
-//     newStore.appendChild(inputText);
-
-//     const newX = document.createElement('button');
-//     newX.classList.add("removeListItem");
-//     newX.onclick = function() {
-//         newStore.remove();
-//         const index = grid[selectedI][selectedJ].labels.indexOf(labelText);
-//         if (index > -1) {
-//             grid[selectedI][selectedJ].labels.splice(index, 1);
-//         }
-//     }
-//     newX.textContent = "X";
-//     newStore.appendChild(newX);
-
-//     return newStore;
-// }
 
 // //class for grid, Djikstra's
 // class Node {
