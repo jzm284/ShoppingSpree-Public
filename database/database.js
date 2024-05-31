@@ -10,11 +10,11 @@ const db = new sqlite3.Database('./database/database.db', sqlite3.OPEN_READWRITE
 });
 
 //our user table schema
-const query =
+const user_query =
     `CREATE TABLE IF NOT EXISTS users 
     (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
+    name TEXT,
     email TEXT UNIQUE,
     password TEXT,
     userType TEXT,
@@ -22,12 +22,50 @@ const query =
     lastLogin DATE
     )`;
 
+//grocery list table schema (for customers)
+    const list_query = `
+    CREATE TABLE IF NOT EXISTS lists
+    (
+    list_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    store_id INTEGER,
+    email TEXT,
+    dateCreated DATE,
+    FOREIGN KEY (store_id) REFERENCES stores(store_id),
+    FOREIGN KEY (email) REFERENCES users(email)
+    )`;
+
+//grocery store table schema (for store owners)
+//layout is a JSON object that stores the layout of the store
+const store_query =
+    `CREATE TABLE IF NOT EXISTS stores
+    (
+    store_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    address TEXT,
+    layout TEXT,
+    public BOOLEAN
+    )`;
+
 db.serialize(() => {
-    db.run(query, (err) => {
+    db.run(user_query, (err) => {
         if (err) {
             console.error('Error creating table', err.message);
         } else {
-            console.log('Table created successfully');
+            console.log('Table created successfully (users)');
+        }
+    });
+    db.run(store_query, (err) => {
+        if (err) {
+            console.error('Error creating stores table', err.message);
+        } else {
+            console.log('Table created successfully (stores)');
+        }
+    });
+    db.run(list_query, (err) => {
+        if (err) {
+            console.error('Error creating lists table', err.message);
+        } else {
+            console.log('Table created successfully (lists)');
         }
     });
 });

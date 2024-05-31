@@ -10,6 +10,9 @@ const db = require("../database/database");
  * @param {The HTTP response object} res
  */
 exports.showRegister = function (req, res) {
+  if (req.session.loggedIn) {
+    return res.redirect("/dashboard");
+  }
   const errors = req.flash("error");
   const formData = req.flash("formData")[0];
 
@@ -25,6 +28,9 @@ exports.showRegister = function (req, res) {
  * @param {The HTTP response object} res
  */
 exports.showLogin = function (req, res) {
+  if (req.session.loggedIn) {
+    return res.redirect("/dashboard");
+  }
   const errors = req.flash("error");
   const formData = req.flash("formData")[0];
 
@@ -33,6 +39,47 @@ exports.showLogin = function (req, res) {
     formData: formData,
   });
 };
+
+
+/**
+ * Function to validate an email address
+ * credit to emailregex.com for the regex
+ * @param {The email address to validate} email
+ * @returns {true if the email is valid, else false}
+ */
+function validateEmail(email) {
+  var regex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email);
+}
+
+/**
+ * Function to ensure strength of a user's password
+ * @param {The password to validate} password
+ * @returns {JSON object - {isValid: boolean, message: string}
+ * where isValid is true if the password passes all checks, else false,
+ * and message is a string with the reason the password is invalid (null if valid)}
+ */
+function validatePassword(password) {
+  let isValid = true;
+  let message = null;
+
+  if (password.length < 8) {
+    isValid = false;
+    message = "Password must be at least 8 characters long";
+  } else if (!/[a-z]/.test(password)) {
+    isValid = false;
+    message = "Password must contain at least one lowercase letter";
+  } else if (!/[A-Z]/.test(password)) {
+    isValid = false;
+    message = "Password must contain at least one uppercase letter";
+  } else if (!/[0-9]/.test(password)) {
+    isValid = false;
+    message = "Password must contain at least one number";
+  } //else the password is valid and message is null
+
+  return { isValid, message };
+}
 
 /**
  * Function to register a new user, called on a POST request to /auth/register
@@ -90,6 +137,7 @@ exports.register = async function (req, res) {
         //success case, create new user
         await createUser(registerEmail, registerPass, registerName, userType);
         req.session.loggedIn = true;
+        req.session.user = { email: registerEmail };
         return res.redirect("/dashboard");
       }
     }
@@ -152,7 +200,7 @@ exports.login = async function (req, res) {
         return res.status(500).send("Internal server error");
       }
       req.session.loggedIn = true;
-      req.session.user = { name: user.name, email: user.email };
+      req.session.user = { email: loginEmail };
       return res.redirect("/dashboard");
     });
   } catch (err) {
@@ -197,7 +245,7 @@ async function createUser(email, password, name, userType) {
   // Store the user in the database
   // Parameterized to avoid SQL injection attacks
   return new Promise((resolve, reject) => {
-    const query = `INSERT INTO users (email, password, username, userType, dateCreated, lastLogin) VALUES (?, ?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO users (email, password, name, userType, dateCreated, lastLogin) VALUES (?, ?, ?, ?, ?, ?)`;
     //credit to https://stackoverflow.com/questions/5129624 for the JS->SQL date formatting
     const date = new Date().toISOString().slice(0, 19).replace("T", " ");
     db.run(query, [email, hash, name, userType, date, date], (err) => {
@@ -211,45 +259,6 @@ async function createUser(email, password, name, userType) {
   });
 }
 
-/**
- * Function to validate an email address
- * credit to emailregex.com for the regex
- * @param {The email address to validate} email
- * @returns {true if the email is valid, else false}
- */
-function validateEmail(email) {
-  var regex =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return regex.test(email);
-}
-
-/**
- * Function to ensure strength of a user's password
- * @param {The password to validate} password
- * @returns {JSON object - {isValid: boolean, message: string}
- * where isValid is true if the password passes all checks, else false,
- * and message is a string with the reason the password is invalid (null if valid)}
- */
-exports.validatePassword = function validatePassword(password) {
-  let isValid = true;
-  let message = null;
-
-  if (password.length < 8) {
-    isValid = false;
-    message = "Password must be at least 8 characters long";
-  } else if (!/[a-z]/.test(password)) {
-    isValid = false;
-    message = "Password must contain at least one lowercase letter";
-  } else if (!/[A-Z]/.test(password)) {
-    isValid = false;
-    message = "Password must contain at least one uppercase letter";
-  } else if (!/[0-9]/.test(password)) {
-    isValid = false;
-    message = "Password must contain at least one number";
-  } //else the password is valid and message is null
-
-  return { isValid, message };
-}
 
 /**
  * Function to check that no fields are blank
@@ -272,7 +281,7 @@ exports.changePassword = async function (req, res) {
   const user = req.session.user;
 
   if (!user) {
-    return res.json({ error: 'Unauthorized user' });
+    return res.json({ error: 'Please log in first.' });
   }
 
   if (checkBlank([oldPass, newPass, confirmPass])) {
@@ -343,3 +352,16 @@ exports.changePassword = async function (req, res) {
     return res.json({ error: 'An error occurred while changing the password' });
   }
 };
+
+/**
+ * Function to log out a user
+ * @param {The HTTP request object} req
+ * @param {The HTTP response object} res
+ * @returns {redirects to /auth/login}
+ */
+exports.logout = function (req, res) {
+  req.session.destroy();
+  res.redirect("/auth/login");
+}
+
+exports.validatePassword = validatePassword;

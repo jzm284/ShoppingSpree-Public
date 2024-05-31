@@ -2,72 +2,165 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/dashboard.css" />
     <script src="scripts/dash-script.js"></script>
 </head>
 
 <body>
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="icon" style="margin-right: auto"><a href="/"><img src="./images/home-icon.png"> </a></li>
-            <li class="nav-item" style="margin: auto"><button onclick="toggleDashButtons(this)">Make New List</button>
+            <li class="icon" style="margin-right: auto">
+                <a href="/"><img src="./images/home-icon.png" /> </a>
             </li>
-            <li class="nav-item" style="margin: auto"><button onclick="toggleDashButtons(this)" href="#">My Past
-                    Lists</button></li>
-            <li class="nav-item" style="margin: auto"><button onclick="toggleDashButtons(this)" href="#">About
-                    Us</button></li>
-            <li class="icon" style="margin-left: auto"><button id="profile-icon" onclick="toggleProfileBar()"><img
-                        src="./images/profile.png"></button></li>
+            <% if (profile.userType.slice(0, 8)==='Customer' ) { %>
+                <li class="nav-item">
+                    <button onclick="toggleDashButtons(this)" data-section="new-list">Make New List</button>
+                </li>
+                <li class="nav-item">
+                    <button onclick="toggleDashButtons(this)" data-section="my-lists">
+                        My Lists
+                    </button>
+                </li>
+                <% } else { %> <!-- Store Owner -->
+                    <li class="nav-item">
+                        <button onclick="toggleDashButtons(this)" data-section="new-store">Add New Store</button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="toggleDashButtons(this)" data-section="my-stores">My Stores</button>
+                    </li>
+                    <% } %>
+
+                        <li class="nav-item">
+                            <button onclick="toggleDashButtons(this)" data-section="about-us" href="#">About Us</button>
+                        </li>
+                        <li class="icon" style="margin-left: auto">
+                            <button id="profile-icon" onclick="toggleProfileBar()">
+                                <img src="./images/profile.png" />
+                            </button>
+                        </li>
         </ul>
     </nav>
     <main>
         <div class="sidebar" id="profile-bar">
             <div class="profile-list">
                 <div class="profile-item" id="acc-details">
-                    <span style="font-size: 24px;">Account Details</span>
+                    <span style="font-size: 24px">Account Details</span>
                     <div class="sidebar-content">
-                        <p>Name: <%= profile.name%> </p>
-                        <p>Email: <%= profile.email%></p>
-                        <p>Account Type: <%= profile.userType%></p>
-                        <p>Member since: <%= profile.date%></p>
-                        <button class="profile-action-btn" id="upgrade-acc" onclick="upgradeAccount()">Upgrade Account</button>
-                        <button class="profile-action-btn" id="delete-acc">Delete Account</button>
+                        <p>Name: <%= profile.name%>
+                        </p>
+                        <p>Email: <%= profile.email%>
+                        </p>
+                        <p>Account Type: <%= profile.userType%>
+                        </p>
+                        <p>Member since: <%= profile.date%>
+                        </p>
+                        <button class="profile-action-btn" id="upgrade-acc" onclick="upgradeAccount()">
+                            Upgrade Account
+                        </button>
+                        <button class="profile-action-btn" id="delete-acc">
+                            Delete Account
+                        </button>
                     </div>
                     <button class="profile-button" onclick="toggleProfileItem(this.parentNode)">
                         <img src=./images/expand.png>
                     </button>
                 </div>
                 <div class="profile-item">
-                    <span style="font-size: 24px;">Security</span>
+                    <span style="font-size: 24px">Security</span>
                     <div class="sidebar-content">
                         <h3>Change Password</h3>
-                            <div class="form-group">
-                                <label for="old-pass">Old Password</label>
-                                <input type="password" name="old-pass" id="old-pass">
-                            </div>
-                            <div class="form-group">
-                                <label for="new-pass">New Password</label>
-                                <input type="password" name="new-pass" id="new-pass">
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm-pass">Confirm New Password</label>
-                                <input type="password" name="confirm-pass" id="confirm-pass">
-                            </div>
-                            <div class="error-div">
-                                <p id="error-msg"></p>
-                            </div>
-                            <button onclick="changePassword()" id="change-pass">Submit</button>
+                        <div class="form-group">
+                            <label for="old-pass">Old Password</label>
+                            <input type="password" name="old-pass" id="old-pass" />
+                        </div>
+                        <div class="form-group">
+                            <label for="new-pass">New Password</label>
+                            <input type="password" name="new-pass" id="new-pass" />
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-pass">Confirm New Password</label>
+                            <input type="password" name="confirm-pass" id="confirm-pass" />
+                        </div>
+                        <div class="error-div">
+                            <p id="error-msg"></p>
+                        </div>
+                        <button onclick="changePassword()" id="change-pass">
+                            Submit
+                        </button>
                     </div>
-                    
-                    <button class="profile-button"onclick="toggleProfileItem(this.parentNode)"><img src=./images/expand.png></button></div>
-                <div class="profile-item"><button class="profile-button"
-                        onclick="toggleProfileItem(this.parentNode)"><img src=./images/expand.png></button></div>
+
+                    <button class="profile-button" onclick="toggleProfileItem(this.parentNode)">
+                        <img src=./images/expand.png>
+                    </button>
+                </div>
+                <div class="profile-item" id="log-out-div">
+                    <span style="font-size: 24px">Log Out</span>
+                    <div class="sidebar-content">
+                        <button id="log-out" onclick="logOut()">
+                            Log Out
+                        </button>
+                    </div>
+                    <button class="profile-button" onclick="toggleProfileItem(this.parentNode)">
+                        <img src=./images/expand.png>
+                    </button>
+                </div>
             </div>
         </div>
-        <section class="main-content"></section>
+
+        <section class="main-content">
+            <% if (profile.userType.slice(0, 8)==='Customer' ) { %>
+                <div id="new-list" class="dash-content hidden">
+                    <div>
+                        <div class="dash-content-div">
+                            <div class="search-container">
+                                <input type="text" id="store-search" class="search-input"
+                                    placeholder="Search for stores...">
+                                <ul id="store-list" class="hidden"></ul>
+                            </div>
+                            <input type="text" id="customer-list-input" class="search-input"
+                                placeholder="Type and press Enter to Add Item">
+                            <span style="font-size: 24px; margin-bottom: 2%">Your List</span>
+                        </div>
+                        <div id="customer-list-div"></div>
+                        <div class="submit-div">
+                            <button id="submit-btn" onclick="submitList()">Submit!</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="my-lists" class="dash-content hidden">
+                    <h1>My Past Lists</h1>
+                    <!-- Add your content here -->
+                </div>
+                <% } else { %>
+                    <div id="new-store" class="dash-content hidden">
+                        <div class="dash-content-div">
+                            <h1>Add a New Store</h1>
+                            <div class="search-container">
+                                <input type="text" id="store-search" class="search-input"
+                                    placeholder="Search for stores...">
+                                <ul id="store-list" class="hidden"></ul>
+                            </div>
+                            <input type="text" id="store-name" class="search-input" placeholder="Store Name">
+                            <input type="text" id="store-location" class="search-input" placeholder="Store Location">
+                            <input type="text" id="store-hours" class="search-input" placeholder="Store Hours">
+                            <input type="text" id="store-contact" class="search-input" placeholder="Store Contact">
+                            <button id="submit-store" onclick="submitStore()">Submit!</button>
+                        </div>
+                        
+                    </div>
+                    <div id="my-stores" class="dash-content hidden">
+                        <h1>My Stores</h1>
+                        <!-- Add your content here -->
+                    </div>
+                    <% } %>
+                        <div id="about-us" class="dash-content hidden">
+                            <h1>About Us</h1>
+                            <!-- Add your content here -->
+                        </div>
+        </section>
     </main>
 </body>
 

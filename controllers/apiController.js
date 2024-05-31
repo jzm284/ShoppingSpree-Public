@@ -1,6 +1,105 @@
 const db = require("../database/database");
-const auth = require('./authController');
-const bcrypt = require('bcrypt');
+const auth = require("./authController");
+const bcrypt = require("bcrypt");
+
+exports.getStores = async function (req, res) {
+  try {
+    const user = req.session.user;
+    if (!user) {
+      throw new Error("Unauthorized user.");
+    }
+    const stores = await new Promise((resolve, reject) => {
+      db.all(`SELECT name, address FROM stores WHERE public = TRUE`, (err, rows) => {
+        if (err) {
+          console.error("Error getting stores", err);
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+    res.json(stores);
+  } catch (error) {
+    console.error("Failed to get stores", error);
+    res.redirect("/dashboard");
+  }
+};
+
+exports.getMyLists = async function (req, res) { 
+    const user = req.session.user;
+    if (!user) {
+        throw new Error("Unauthorized user.");
+    }
+    const userData = await new Promise((resolve, reject) => {
+        db.get(`SELECT * FROM users WHERE email = ?`, user.email, (err, row) => {
+            if (err) {
+                console.error("Error checking for existing user", err);
+                reject(err);
+            } else {
+                console.log("Found user:", row);
+                resolve(row);
+            }
+        });
+    }
+    );
+    if (userData.userType !== "customer") {
+        throw new Error("Only customers can see their grocery lists.");
+    }
+    const lists = await new Promise((resolve, reject) => {
+        db.all(`SELECT * FROM lists WHERE email = ?`, user.email, (err, rows) => {
+            if (err) {
+                console.error("Error getting lists", err);
+                reject(err);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+    res.json(lists);
+}
+
+exports.saveList = async function (req, res) {
+    const user = req.session.user;
+    if (!user) {
+        throw new Error("Unauthorized user.");
+    }
+    const userData = await new Promise((resolve, reject) => {
+        db.get(`SELECT * FROM users WHERE email = ?`, user.email, (err, row) => {
+            if (err) {
+                console.error("Error checking for existing user", err);
+                reject(err);
+            } else {
+                console.log("Found user:", row);
+                resolve(row);
+            }
+        });
+    }
+    );
+    if (userData.userType !== "customer") {
+        throw new Error("Only customers can save grocery lists.");
+    }
+    const { listName, listItems } = req.body;
+    const date = new Date().toISOString().slice(0, 19).replace("T", " ");
+    await new Promise((resolve, reject) => {
+        db.run(
+            `INSERT INTO lists (email, dateCreated, list) VALUES (?, ?, ?, ?, ?)`,
+            [user.email, date, listName, listItems],
+            (err) => {
+                if (err) {
+                    console.error("Error saving list", err);
+                    reject(err);
+                } else {
+                    res.json({
+                        message: "List successfully saved: " + listName,
+                        status: "success",
+                    });
+                    resolve();
+                }
+            }
+        );
+    });
+};
+
 
 exports.getProfileData = async function (email) {
   try {
@@ -17,7 +116,7 @@ exports.getProfileData = async function (email) {
       });
     });
 
-    const name = accDetails.username;
+    const name = accDetails.name;
     const date = formatDate(accDetails.dateCreated);
     console.log("Date", date);
     //return the userType with a capital first letter
@@ -51,11 +150,11 @@ function formatDate(date) {
 exports.deleteAccount = async function (req, res) {
   try {
     const user = req.session.user;
-    console.log('session', req.session);
+    console.log("session", req.session);
     if (!user) {
       throw new Error("Unauthorized user.");
-    } else if (user.email === 'test@test.com') {
-        throw new Error("Cannot delete test account.");
+    } else if (user.email === "test@test.com") {
+      throw new Error("Cannot delete test account.");
     }
     await new Promise((resolve, reject) => {
       db.run(`DELETE FROM users WHERE email = ?`, user.email, (err) => {
@@ -82,4 +181,34 @@ exports.deleteAccount = async function (req, res) {
   }
 };
 
-
+exports.makeNewList = async function (req, res) {
+  try {
+    const user = req.session.user;
+    if (!user) {
+      throw new Error("Unauthorized user.");
+    }
+    const { listName, listType } = req.body;
+    const date = new Date().toISOString().slice(0, 19).replace("T", " ");
+    await new Promise((resolve, reject) => {
+      db.run(
+        `INSERT INTO lists (list_id, email, dateCreated) VALUES (?, ?, ?, ?)`,
+        [list_id, user.email, date],
+        (err) => {
+          if (err) {
+            console.error("Error creating list", err);
+            reject(err);
+          } else {
+            res.json({
+              message: "List successfully created: " + listName,
+              status: "success",
+            });
+            resolve();
+          }
+        }
+      );
+    });
+  } catch (error) {
+    console.error("Failed to create list", error);
+    res.redirect("/dashboard");
+  }
+};

@@ -266,6 +266,8 @@ function toggleCustomer() {
 //     return results;
 // }
 
+
+
 // function findShortestPath(startNode, grid) {
 //     // Assuming grid is a 2D array of nodes
 //     let rows = grid.length;

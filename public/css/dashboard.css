@@ -86,7 +86,7 @@ body {
 }
 
 .nav-item {
-  margin: 0 1em;
+  margin: auto;
   font-size: 1.5em;
 }
 
@@ -162,8 +162,6 @@ body {
 #change-pass {
   position: absolute;
   bottom: 7.5%;
-  color: blue;
-  outline: 3px solid blue;
   height: 10%;
   width: 75%;
   left: 12.5%;
@@ -182,6 +180,23 @@ body {
   outline: 3px solid red;
 }
 
+#log-out {
+  position: absolute;
+  bottom: 30%;
+  height: 7.5vh;
+  width: 75%;
+  left: 12.5%;
+  font-size: 1em;
+}
+
+#log-out:hover {
+  cursor: grab;
+}
+
+#log-out-div.profile-item.active {
+  height: 25vh;
+}
+
 .profile-button {
   position: absolute;
   top: 5%;
@@ -193,6 +208,11 @@ body {
 .profile-button img {
   width: 3vh;
   height: 2vh;
+  transition: transform 0.2s ease-in-out;
+}
+
+.profile-item.active img {
+  transform: scaleY(-1);
 }
 
 .center {
@@ -224,4 +244,148 @@ body {
   color: var(--text-color);
   border-radius: 5px;
   cursor: grab;
+}
+
+.dash-content {
+  display: none;
+}
+
+.dash-content:not(.hidden) {
+  display: block;
+  outline: 1px solid red;
+  width: fit-content;
+  min-width: 60%;
+  height: 80%;
+  margin: auto;
+}
+
+.search-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+#store-name-input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#store-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 1000;
+  display: none;
+}
+
+#store-list.hidden {
+  display: none;
+}
+
+#store-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#store-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.dash-content-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: var(--darker-blue);
+}
+
+#customer-list-div{
+  height: 90%; 
+  background: transparent;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  overflow-y: auto;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.search-input {
+  background-color: white;
+  border-color: #090018;
+  position: relative;
+  width: 90%;
+  height: 10%;
+  margin: 5%;
+  font-size: 2em;
+  border-radius: 6px;
+  outline: 3px solid #090018;
+}
+
+.list-item-div {
+  display: flex;
+  flex-direction: row;
+  position : relative;
+  border-style : solid;
+  border-width : 1px;
+  width : 90%;
+  height : 7vh;
+  background-color : transparent;
+  border-color : #090018;
+  margin-left : 5%;
+  margin-top : 2%;
+  font-size : 30px;
+  border-radius : 6px;
+}
+
+.submit-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  width: fit-content;
+  margin: 10px auto;
+}
+
+#submit-btn {
+  background-color: lightgray;
+  outline: 1px solid var(--site-yellow);
+  color: black;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-size: 2em;
+}
+
+.list-item {
+  font-size : 30px;
+  outline: 5px solid red;
+  width : 95%;
+  height : 90%;
+  background-color : white;
+  border-color : transparent;
+  padding-left : 10px;
+  border-radius : 6px;
+}
+
+.remove-list-item {
+  position : absolute;
+  right : 5%;
+  border-color : 1px solid black;
+  bottom : 15%;
+  height:80%;
+  width:10%;
+  border-radius : 6px;
+}
+
+.removeListItem:hover{
+  background-color: darkgrey;
 }
