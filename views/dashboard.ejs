@@ -138,10 +138,24 @@
                     <div id="new-store" class="dash-content hidden">
                         <div class="dash-content-div">
                             <h1>Add a New Store</h1>
-                            <div class="search-container">
-                                <input type="text" id="store-search" class="search-input"
-                                    placeholder="Search for stores...">
-                                <ul id="store-list" class="hidden"></ul>
+
+                            <div id="store-creator">
+                                <div id="ctrl-panel">
+                                    <input type="number" min="1" placeholder="X dimension" id="x-dim">
+                                    <input type="number" min="1" placeholder="Y dimension" id="y-dim">
+                                    <button onclick="generateGrid()">Create Store</button>
+
+                                    <div id='edit-box'>
+                                        <input style="margin-top:0;margin-bottom: 20%; font-size: 20px;" type="checkbox" id="wall-check">Wall?
+                                        <br>
+                                        <span style="position: absolute; top: 70%; text-align: center; left: 42%;">Item List</span>
+                                        <br>
+                                         <input placeholder="Add Item Here" id="item_list_input" type="textbox" style="margin-top: 0%; position: absolute; top: 73%; left: 30%;">
+                                         <div id="item_list_container" style=" height:120px; margin-top: 0%; position: absolute; top: 76%; left: 20%; width: 62%;"></div>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div id="store-canvas" width="500" height="500"></div>
                             </div>
                             <input type="text" id="store-name" class="search-input" placeholder="Store Name">
                             <input type="text" id="store-location" class="search-input" placeholder="Store Location">
@@ -149,7 +163,7 @@
                             <input type="text" id="store-contact" class="search-input" placeholder="Store Contact">
                             <button id="submit-store" onclick="submitStore()">Submit!</button>
                         </div>
-                        
+
                     </div>
                     <div id="my-stores" class="dash-content hidden">
                         <h1>My Stores</h1>
