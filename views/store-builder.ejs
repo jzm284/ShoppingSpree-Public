@@ -15,53 +15,64 @@
             <div class="header">
                 <h1 style="margin: auto; font-size: 2em; text-align: center">Store Builder</h1>
             </div>
-            <div class="params">
-                <div class="form-group">
-                    <label for="store-name">Store Name</label>
-                    <input type="text" placeholder="My Store" id="store-name">
+            <form>
+                <div class="params">
+                    <div class="form-group">
+                        <label for="store-name">Store Name</label>
+                        <input type="text" name="store-name" placeholder="My Store" id="store-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="store-address">Store Address</label>
+                        <input type="text" name="store-address" placeholder="12345 Here St" id="store-address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="x-dim">Floor Plan Dimensions</label>
+                        <input type="number" name="x-dim" min="1" placeholder="X dimension" id="x-dim" required>
+                        <input type="number" name="y-dim" min="1" placeholder="Y dimension" id="y-dim" required>
+                        <span class="dim-info">(Use whatever dimensions you like, as long as you're consistent!)</span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" id="create-grid" class="submit-buttons" onclick="generateGrid()">Create New 
+                            Grid</button>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="store-address">Store Address</label>
-                    <input type="text" placeholder="12345 Here St" id="store-address">
-                </div>
+                <div id="section-descriptor">
+                    <u><span id="grid-coords">Section</span></u>
+                    <div class="checkbox-div">
+                        <label for="wall-check">Is this section a wall?</label>
+                        <input type="checkbox" id="wall-check">
+                    </div>
 
-                <div class="form-group">
-                    <label for="x-dim">Floor Plan Dimensions</label>
-                    <input type="number" min="1" placeholder="X dimension" id="x-dim">
-                    <input type="number" min="1" placeholder="Y dimension" id="y-dim">
-                    <span class="dim-info">(Use whatever dimensions you like, as long as you're consistent!)</span>
-                </div>
+                    <div class="checkbox-div">
+                        <label for="is-entrance">Is this an entrance/exit?</label>
+                        <input type="checkbox" id="is-entrance">
+                    </div>
 
-                <div class="form-group">
-                    <button id="create-grid" class="submit-buttons" onclick="generateGrid()">Create Grid</button>
-                </div>
-            </div>
-
-            <div id='section-descriptor'>
-                <u><span id="grid-coords">Section</span></u>
-                <div class="checkbox-div">
-                    <label for="wall-check">Is this section a wall?</label>
-                    <input type="checkbox" id="wall-check">
-                </div>
-
-                <div class="checkbox-div">
-                    <label for="is-entrance">Is this an entrance/exit?</label>
-                    <input type="checkbox" id="is-entrance">
-                </div>
-
-                <div class="checkbox-div">
-                    <label for="item-list">What kinds of items are in this section?</label>
-                    <span style="font-size: 0.5em">(Separate items with commas - i.e. fruit, condiments, canned
-                        goods)</span>
+                    <div class="checkbox-div">
+                        <label for="item-list">What kinds of items are in this section?</label>
+                        <span style="font-size: 0.5em">(Separate items with commas - i.e. fruit, condiments, canned
+                            goods)</span>
                         <br><br>
-                    <input placeholder="Add Items Here" type="textbox" id="add-items" id="section-items">
+                        <input type="textbox" name="section-items" placeholder="Add Items Here" id="section-items">
+                    </div>
                 </div>
-            </div>
-            <button id="save-section" class="submit-buttons" onclick="saveStore()">Save Store!</button>
+                <div class="checkbox-div">
+                    <label for="public-check">Make store visible to the public?</label>
+                    <input type="checkbox" name="public-check" id="public-check">
+                </div>
+                <button type="submit" id="save-store" onclick=saveStoreLayout() class="submit-buttons">Save Store!</button>
+            </form>
+
         </section>
+
         <section id="floor-plan">
-            <div id="store-canvas"></div>
+            <h2>Click the cells below to edit your floor plan</h2>
+            <div id="store-canvas">
+            </div>
         </section>
     </div>
 </body>

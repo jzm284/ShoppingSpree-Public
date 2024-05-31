@@ -35,14 +35,13 @@ const user_query =
     )`;
 
 //grocery store table schema (for store owners)
-//layout is a JSON object that stores the layout of the store
 const store_query =
     `CREATE TABLE IF NOT EXISTS stores
     (
     store_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     address TEXT,
-    layout TEXT,
+    layout JSON,
     public BOOLEAN
     )`;
 

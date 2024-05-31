@@ -9,14 +9,17 @@ exports.getStores = async function (req, res) {
       throw new Error("Unauthorized user.");
     }
     const stores = await new Promise((resolve, reject) => {
-      db.all(`SELECT name, address FROM stores WHERE public = TRUE`, (err, rows) => {
-        if (err) {
-          console.error("Error getting stores", err);
-          reject(err);
-        } else {
-          resolve(rows);
+      db.all(
+        `SELECT name, address FROM stores WHERE public = TRUE`,
+        (err, rows) => {
+          if (err) {
+            console.error("Error getting stores", err);
+            reject(err);
+          } else {
+            resolve(rows);
+          }
         }
-      });
+      );
     });
     res.json(stores);
   } catch (error) {
@@ -25,81 +28,123 @@ exports.getStores = async function (req, res) {
   }
 };
 
-exports.getMyLists = async function (req, res) { 
-    const user = req.session.user;
-    if (!user) {
-        throw new Error("Unauthorized user.");
-    }
-    const userData = await new Promise((resolve, reject) => {
-        db.get(`SELECT * FROM users WHERE email = ?`, user.email, (err, row) => {
-            if (err) {
-                console.error("Error checking for existing user", err);
-                reject(err);
-            } else {
-                console.log("Found user:", row);
-                resolve(row);
-            }
-        });
-    }
-    );
-    if (userData.userType !== "customer") {
-        throw new Error("Only customers can see their grocery lists.");
-    }
-    const lists = await new Promise((resolve, reject) => {
-        db.all(`SELECT * FROM lists WHERE email = ?`, user.email, (err, rows) => {
-            if (err) {
-                console.error("Error getting lists", err);
-                reject(err);
-            } else {
-                resolve(rows);
-            }
-        });
+exports.getMyLists = async function (req, res) {
+  const user = req.session.user;
+  if (!user) {
+    throw new Error("Unauthorized user.");
+  }
+  const userData = await new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM users WHERE email = ?`, user.email, (err, row) => {
+      if (err) {
+        console.error("Error checking for existing user", err);
+        reject(err);
+      } else {
+        console.log("Found user:", row);
+        resolve(row);
+      }
     });
-    res.json(lists);
-}
-
-exports.saveList = async function (req, res) {
-    const user = req.session.user;
-    if (!user) {
-        throw new Error("Unauthorized user.");
-    }
-    const userData = await new Promise((resolve, reject) => {
-        db.get(`SELECT * FROM users WHERE email = ?`, user.email, (err, row) => {
-            if (err) {
-                console.error("Error checking for existing user", err);
-                reject(err);
-            } else {
-                console.log("Found user:", row);
-                resolve(row);
-            }
-        });
-    }
-    );
-    if (userData.userType !== "customer") {
-        throw new Error("Only customers can save grocery lists.");
-    }
-    const { listName, listItems } = req.body;
-    const date = new Date().toISOString().slice(0, 19).replace("T", " ");
-    await new Promise((resolve, reject) => {
-        db.run(
-            `INSERT INTO lists (email, dateCreated, list) VALUES (?, ?, ?, ?, ?)`,
-            [user.email, date, listName, listItems],
-            (err) => {
-                if (err) {
-                    console.error("Error saving list", err);
-                    reject(err);
-                } else {
-                    res.json({
-                        message: "List successfully saved: " + listName,
-                        status: "success",
-                    });
-                    resolve();
-                }
-            }
-        );
+  });
+  if (userData.userType !== "customer") {
+    throw new Error("Only customers can see their grocery lists.");
+  }
+  const lists = await new Promise((resolve, reject) => {
+    db.all(`SELECT * FROM lists WHERE email = ?`, user.email, (err, rows) => {
+      if (err) {
+        console.error("Error getting lists", err);
+        reject(err);
+      } else {
+        resolve(rows);
+      }
     });
+  });
+  res.json(lists);
 };
 
+exports.makeNewStore = async function (req, res) {
+  try {
+    const user = req.session.user;
+    if (!user) {
+      throw new Error("Unauthorized user.");
+    }
+    const userData = await new Promise((resolve, reject) => {
+      db.get(`SELECT * FROM users WHERE email = ?`, user.email, (err, row) => {
+        if (err) {
+          console.error("Error checking for existing user", err);
+          reject(err);
+        } else {
+          console.log("Found user:", row);
+          resolve(row);
+        }
+      });
+    });
+    if (userData.userType !== "owner") {
+      throw new Error("Only store owners can create stores.");
+    }
+    const { name, address, public } = req.body;
+    const date = new Date().toISOString().slice(0, 19).replace("T", " ");
+    await new Promise((resolve, reject) => {
+      db.run(
+        `INSERT INTO stores (name, address, dateCreated, public) VALUES (?, ?, ?, ?)`,
+        [name, address, date, public],
+        (err) => {
+          if (err) {
+            console.error("Error creating store", err);
+            reject(err);
+          } else {
+            res.json({
+              message: "Store successfully created: " + name,
+              status: "success",
+            });
+            resolve();
+          }
+        }
+      );
+    });
+  } catch (error) {
+    console.error("Failed to create store", error);
+    res.redirect("/dashboard");
+  }
+};
+exports.saveList = async function (req, res) {
+  const user = req.session.user;
+  if (!user) {
+    throw new Error("Unauthorized user.");
+  }
+  const userData = await new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM users WHERE email = ?`, user.email, (err, row) => {
+      if (err) {
+        console.error("Error checking for existing user", err);
+        reject(err);
+      } else {
+        console.log("Found user:", row);
+        resolve(row);
+      }
+    });
+  });
+  if (userData.userType !== "customer") {
+    throw new Error("Only customers can save grocery lists.");
+  }
+  const { listName, listItems } = req.body;
+  const date = new Date().toISOString().slice(0, 19).replace("T", " ");
+  await new Promise((resolve, reject) => {
+    db.run(
+      `INSERT INTO lists (email, dateCreated, list) VALUES (?, ?, ?, ?, ?)`,
+      [user.email, date, listName, listItems],
+      (err) => {
+        if (err) {
+          console.error("Error saving list", err);
+          reject(err);
+        } else {
+          res.json({
+            message: "List successfully saved: " + listName,
+            status: "success",
+          });
+          resolve();
+        }
+      }
+    );
+  });
+};
 
 exports.getProfileData = async function (email) {
   try {

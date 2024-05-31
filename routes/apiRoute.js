@@ -25,5 +25,6 @@ router.get('/profile-data', checkAuth, apiController.getProfileData);
 router.delete('/delete-account', checkAuth, apiController.deleteAccount); 
 router.post('new-list', checkAuth, apiController.makeNewList);
 router.get('/stores', checkAuth, apiController.getStores);
+router.post('/new-store', checkAuth, apiController.makeNewStore);
 
 module.exports = router;
